@@ -1,6 +1,6 @@
 import * as THREE from '/build/three.module.js'
 import { OrbitControls } from '/jsm/controls/OrbitControls.js'
-import { Laser, fireLaser } from '/laser.js'
+import { Laser, fireLaser } from '/js/laser.js'
 
 
 let lasers = [];
