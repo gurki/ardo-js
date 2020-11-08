@@ -8,6 +8,10 @@ export class Laser {
         this.start = position.clone();
         this.position = position.clone();
         this.velocity = velocity.clone();
+        this.audioSource = undefined;
+        this.panner = undefined;
+        this.delay = undefined;
+        this.randomized = false;
 
         const geometry = new THREE.SphereGeometry( 0.5, 32, 32 );
         const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
@@ -16,8 +20,21 @@ export class Laser {
     }
 
     update( dt ) {
-        this.position.addScaledVector( this.velocity, dt );
+
+        this.position.addScaledVector( this.velocity, 10 *dt );
         this.mesh.position.copy( this.position );
+
+        if ( this.panner ) {
+            this.panner.positionX.value = this.position.x;
+            this.panner.positionY.value = this.position.y;
+            this.panner.positionZ.value = this.position.z;
+        }
+
+        if ( this.distance() > 10 && ! this.randomized ) {
+            this.velocity.random();
+            this.randomized = true;
+        }
+
     }
 
     distance() {
@@ -37,5 +54,7 @@ export const fireLaser = function( camera, scene, lasers ) {
     const laser = new Laser( position, velocity );
     lasers.push( laser );
     scene.add( laser.mesh )
+
+    return laser;
 
 }

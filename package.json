@@ -1,0 +1,31 @@
+{
+  "name": "ardo",
+  "version": "1.0.0",
+  "description": "GitHub Game Off 2020 - Moonshot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gurki/ardo-js.git"
+  },
+  "keywords": [
+    "threejs",
+    "webaudio",
+    "gamejam"
+  ],
+  "author": "Tobias Gurdan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gurki/ardo-js/issues"
+  },
+  "homepage": "https://github.com/gurki/ardo-js#readme",
+  "dependencies": {
+    "express": "^4.8.8",
+    "nodemon": "^2.0.6",
+    "three": "^0.122.0"
+  },
+  "type": "module"
+}
