@@ -1,0 +1,92 @@
+body {
+    background: #222228;
+    margin: 0;
+    font: 12px system-ui;
+    font-family: 'Unica One', cursive;
+    color: #ddd;
+    user-select: none;
+}
+
+h1 {
+    margin: 0.2em;
+    margin-bottom: 0;
+    font-size: 4em;
+    text-align: center;
+}
+
+button {
+    background-color: #009944;
+    border: none;
+    color: #ddd;
+    padding: 0.2em 0.8em;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-family: 'Unica One', cursive;
+    font-size: 2em;
+    outline: none;
+    border-radius: 3px;
+}
+
+button:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.4);
+    transform: scale( 1.1 );
+    z-index: 1;
+}
+
+button:active {
+    transform: scale( 1.061 );
+    filter: brightness(61%)
+}
+
+canvas {
+    display: block;
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+	width: 100%;
+	text-align: center;
+	z-index: 100;
+	display:block;
+}
+
+.vline {
+    margin: auto;
+    margin-left: 1em;
+    margin-right: 1em;
+    border-left: 1px solid #ddd;
+    height: 24em;
+}
+
+.hline {
+    margin: auto;
+    margin-top: 0.61em;
+    margin-bottom: 0.61em;
+    border-top: 1px solid #ddd;
+    width: 24em;
+}
+
+.vgrid {
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat( 4, max-content );
+    grid-gap: 3em;
+    justify-content: center;
+    align-content: center;
+}
+
+.row1 {
+    margin: auto;
+    grid-row: 1;
+}
+
+.info {
+    font-size: 24px;
+}
+
+#status {
+    font-size: 32px;
+}

@@ -2,9 +2,9 @@
   "name": "ardo",
   "version": "1.0.0",
   "description": "GitHub Game Off 2020 - Moonshot",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "start http://localhost:8000 && nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,7 +25,8 @@
   "dependencies": {
     "express": "^4.8.8",
     "nodemon": "^2.0.6",
-    "three": "^0.122.0"
+    "three": "^0.122.0",
+    "tone": "^14.7.58"
   },
   "type": "module"
 }

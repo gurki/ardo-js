@@ -1,4 +1,4 @@
-import * as THREE from '/build/three.module.js'
+import * as THREE from '/three/build/three.module.js'
 
 
 const ItemType = Object.freeze({
@@ -67,25 +67,35 @@ export const neighbourTile = function( tile, direction ) {
 }
 
 
-export default class Board {
+export class Board {
 
     constructor() {
 
         this.items = [];
-        this.mesh = new THREE.GridHelper( 8, 8 );
+        this.mesh = new THREE.GridHelper( 8, 8, "#5b76ad", "#5b76ad" );
         this.atoms = new THREE.Object3D();
         this.guesses = new THREE.Object3D();
         this.mesh.add( this.atoms );
         this.mesh.add( this.guesses );
+        this.raycaster = new THREE.Raycaster();
 
         const planeGeom = new THREE.PlaneGeometry( 8, 8 );
         const planeMat = new THREE.MeshToonMaterial( { color: 0x335599, side: THREE.DoubleSide }  )
-        const planeMesh = new THREE.Mesh( planeGeom, planeMat );
-        planeMesh.position.setY( -0.01 );
-        planeMesh.rotateX( - 0.5 * Math.PI );
-        planeMesh.receiveShadow = true;
-        this.mesh.add( planeMesh );
+        this.planeMesh = new THREE.Mesh( planeGeom, planeMat );
+        this.planeMesh.position.setY( -0.01 );
+        this.planeMesh.rotateX( - 0.5 * Math.PI );
+        this.planeMesh.receiveShadow = true;
+        this.mesh.add( this.planeMesh );
 
+    }
+
+    clear() {
+        this.items = [];
+        this.updateMesh();
+    }
+
+    numGuesses() {
+        return this.guesses.children.length / 2;
     }
 
     tileToWorld( tile ) {
@@ -93,7 +103,7 @@ export default class Board {
     }
 
     worldToTile( world ) {
-        return new THREE.Vector2( Math.floor( world.x + 3.5 ), Math.floor( -world.z + 3.5 ) );
+        return new THREE.Vector2( Math.floor( world.x + 4 ), Math.floor( -world.z + 4 ) );
     }
 
     isInside( tile ) {
@@ -104,12 +114,42 @@ export default class Board {
         return ( tile.x == 0 ) || ( tile.x == 7 ) || ( tile.y == 0 ) || ( tile.y == 7 );
     }
 
+    hasWon() {
+
+        const res = this.items.every( item => {
+            return ( item.type !== ItemType.Atom ) || this.hasGuess( item.coord );
+        });
+
+        return ( this.atoms.children.length > 0 ) && res;
+
+    }
+
+    hasGuess( tile ) {
+
+        return this.items.some( item =>
+            ( item.type == ItemType.Guess ) &&
+            item.coord.equals( tile )
+        );
+
+    }
+
     isAtom( tile ) {
 
         return this.items.some( item =>
             ( item.type == ItemType.Atom ) &&
             item.coord.equals( tile )
         );
+
+    }
+
+    removeItem( tile, type ) {
+
+        this.items = this.items.filter( item =>
+            ( item.type !== type ) ||
+            ( ! item.coord.equals( tile ) )
+        );
+
+        this.updateMesh();
 
     }
 
@@ -125,8 +165,19 @@ export default class Board {
 
     }
 
-    addGuess( x, y ) {
+    toggleGuess( x, y ) {
+
         const tile = new THREE.Vector2( x, y );
+
+        if ( this.hasGuess( tile ) ) {
+            this.removeItem( tile, ItemType.Guess );
+            return;
+        }
+
+        if ( this.numGuesses() >= 5 ) {
+            return;
+        }
+
         this.addItem( tile, ItemType.Guess );
     }
 
@@ -173,13 +224,18 @@ export default class Board {
         const planeGeom = new THREE.BoxGeometry( 0.8, 0.05, 0.8 );
 
         const guessMat = new THREE.MeshToonMaterial( { color: 0xeeee00 } );
-        const guessMatSnd = new THREE.MeshToonMaterial( { color: 0x999900 } )
+        const guessMatSnd = new THREE.MeshToonMaterial( { color: 0x999900 } );
 
         const atomMat = new THREE.MeshToonMaterial( { color: 0x00ee00 } );
-        const atomMatSnd = new THREE.MeshToonMaterial( { color: 0x009900 } )
+        const atomMatSnd = new THREE.MeshToonMaterial( { color: 0x009900 } );
 
         // guessMatSnd.side = THREE.DoubleSide;
         // atomMatSnd.side = THREE.DoubleSide;
+        guessMat.transparent = true;
+        guessMatSnd.transparent = true;
+
+        guessMat.opacity = 0.61;
+        guessMatSnd.opacity = 0.61;
 
         for ( const item of this.items ) {
 
@@ -198,6 +254,9 @@ export default class Board {
             planeMesh.receiveShadow = true;
             planeMesh.castShadow = true;
             object.add( planeMesh );
+
+            sphereMesh.scale.setScalar( isAtom ? 0.9 : 1.0 );
+            planeMesh.scale.setScalar( isAtom ? 0.9 : 1.0 );
 
         }
 
@@ -225,7 +284,7 @@ export default class Board {
         if ( this.isAtom( tile ) ) {
             path.push( tile );
             obstacles.push( { tile: tile, steps: steps } );
-            console.log( "Hit" );
+            // console.log( "Hit" );
             info = PathInfo.Hit;
             return;
         }
@@ -247,7 +306,7 @@ export default class Board {
             steps++;
             obstacles.push( { tile: neighbourTile( tile, flip( direction ) ), steps: steps } );
             info = PathInfo.Reflect;
-            console.log( "Border Reflect" );
+            // console.log( "Border Reflect" );
             return;
         }
 
@@ -264,7 +323,7 @@ export default class Board {
             steps++;
             obstacles.push( { tile: fn, steps: steps } );
             info = PathInfo.Hit;
-            console.log( "Frontal Hit" );
+            // console.log( "Frontal Hit" );
             return;
         }
 
@@ -277,23 +336,25 @@ export default class Board {
             obstacles.push( { tile: fn, steps: steps } );
             steps++;
             info = PathInfo.Reflect;
-            console.log( "Reflect" );
+            // console.log( "Reflect" );
             this.traceHelper( tile, flip( direction ), path, info, obstacles, steps );
             return;
         }
 
         if ( fra ) {
             path.push( tile );
+            steps++;
             obstacles.push( { tile: frn, steps: steps } );
-            console.log( "Left" );
+            // console.log( "Left" );
             this.traceHelper( tile, l, path, info, obstacles, steps );
             return;
         }
 
         if ( fla ) {
             path.push( tile );
+            steps++;
             obstacles.push( { tile: fln, steps: steps } );
-            console.log( "Right" );
+            // console.log( "Right" );
             this.traceHelper( tile, r, path, info, obstacles, steps );
             return;
         }
@@ -308,7 +369,7 @@ export default class Board {
                 info = PathInfo.Exit;
             }
 
-            console.log( "Exit" );
+            // console.log( "Exit" );
             return;
 
         }
@@ -316,6 +377,20 @@ export default class Board {
         steps++;
         this.traceHelper( fn, direction, path, info, obstacles, steps );
         return;
+    }
+
+    toggleGuessOnScreen( mouse, camera )  {
+
+        this.raycaster.setFromCamera( mouse, camera );
+        const intersects = this.raycaster.intersectObject( this.planeMesh );
+
+        if ( intersects.length == 0 ) {
+            return;
+        }
+
+        const tile = this.worldToTile( intersects[ 0 ].point );
+        this.toggleGuess( tile.x, tile.y );
+
     }
 
 }

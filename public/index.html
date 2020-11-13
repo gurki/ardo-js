@@ -2,13 +2,26 @@
 <html>
 	<head>
 		<title>ardo</title>
-		<style>
-			body { margin: 0; }
-			canvas { display: block; }
-		</style>
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet" type="text/css"/>
 	</head>
 	<body>
-        <script type="module" src="main.js"></script>
-        <div id="canvas3d"></div>
+		<script type="module" src="client.js"></script>
+		<script type="module" src="tone/build/Tone.js"></script>
+		<div id="canvas3d"></div>
+		<div class="overlay">
+			<h1>ARDO</h1>
+			<div>Use your VOICE and LISTEN closely to find the ATOMS</div>
+			<div class="hline"></div>
+			<div class="vgrid">
+				<div class="row1 info">A/D - Move</div>
+				<div class="row1 info">F - Toggle Camera</div>
+				<div class="row1 info">Click - Place Guess</div>
+				<button id="reset-btn">RESET</button>
+			</div>
+			<div class="hline"></div>
+			<div id="status"></div>
+		</div>
 	</body>
 </html>
