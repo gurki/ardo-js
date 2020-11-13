@@ -344,7 +344,7 @@ export class Board {
         if ( fra ) {
             path.push( tile );
             steps++;
-            obstacles.push( { tile: frn, steps: steps } );
+            obstacles.push( { tile: tile, steps: steps } );
             // console.log( "Left" );
             this.traceHelper( tile, l, path, info, obstacles, steps );
             return;
@@ -353,7 +353,7 @@ export class Board {
         if ( fla ) {
             path.push( tile );
             steps++;
-            obstacles.push( { tile: fln, steps: steps } );
+            obstacles.push( { tile: tile, steps: steps } );
             // console.log( "Right" );
             this.traceHelper( tile, r, path, info, obstacles, steps );
             return;
