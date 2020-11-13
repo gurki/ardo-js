@@ -1,7 +1,7 @@
 body {
     background: #222228;
     margin: 0;
-    font: 12px system-ui;
+    font: 14px system-ui;
     font-family: 'Unica One', cursive;
     color: #ddd;
     user-select: none;
@@ -63,8 +63,8 @@ canvas {
 
 .hline {
     margin: auto;
-    margin-top: 0.61em;
-    margin-bottom: 0.61em;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
     border-top: 1px solid #ddd;
     width: 24em;
 }
