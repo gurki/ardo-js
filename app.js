@@ -9,6 +9,6 @@ const app = express();
 app.use( express.static( __dirname + '/public' ));
 app.use( express.static(path.join(__dirname, 'node_modules/' )));
 
-app.listen( 8000, () =>
-    console.log( 'visit http://localhost:8000' )
+app.listen( 3000, () =>
+    console.log( 'visit http://localhost:3000' )
 );

@@ -1,7 +1,7 @@
 import * as THREE from '/three/build/three.module.js'
 import * as Board from '/js/board.js'
 import Camera from '/js/camera.js'
-import { GLTFLoader } from '/three/examples/jsm/loaders/gltfloader.js'
+import { GLTFLoader } from '/three/examples/jsm/loaders/GLTFLoader.js'
 
 
 let lasers = [];
@@ -109,6 +109,7 @@ let limiter;
 let volume;
 let mouse = new THREE.Vector2();
 let startTime;
+let duration;
 
 scene.add( obstacleObjects );
 
@@ -125,6 +126,7 @@ const reset = function() {
     checkVictory();
 
     startTime = new Date();
+    duration = null;
 
 }
 
@@ -132,11 +134,16 @@ const reset = function() {
 const checkVictory = function() {
 
     if ( board.hasWon() ) {
+
         board.atoms.visible = true;
-        const duration = new Date() - startTime;
-        const time = new Date( duration ).toISOString().substr( 11, 8 );
-        console.log( time );
-        statusElement.innerHTML = "YOU WON!!";
+
+        if ( ! duration ) {
+            const delta = new Date() - startTime;
+            duration = new Date( delta ).toISOString().substr( 14, 5 );
+        }
+
+        statusElement.innerHTML = "YOU WON in " + duration + "!!";
+
     } else if ( board.numGuesses() < 5 ) {
         statusElement.innerHTML = "place " + ( 5 - board.numGuesses() ) + " more guesses"
     } else {

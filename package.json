@@ -4,7 +4,7 @@
   "description": "GitHub Game Off 2020 - Moonshot",
   "main": "app.js",
   "scripts": {
-    "start": "start http://localhost:8000 && nodemon",
+    "start": "start http://localhost:3000 && nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
