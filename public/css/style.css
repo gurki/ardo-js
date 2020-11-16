@@ -72,7 +72,7 @@ canvas {
 .vgrid {
     margin: auto;
     display: grid;
-    grid-template-columns: repeat( 4, max-content );
+    grid-template-columns: repeat( 5, max-content );
     grid-gap: 3em;
     justify-content: center;
     align-content: center;

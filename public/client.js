@@ -262,16 +262,16 @@ document.addEventListener( "keydown", async function( event ) {
     else if ( event.key === 'f' ) {
         camera.toggle();
     }
-    else if ( event.key === 's' ) {
+    // else if ( event.key === 's' ) {
 
-        if ( board.hasWon() ) {
-            return;
-        }
+        // if ( board.hasWon() ) {
+        //     return;
+        // }
 
-        board.spawnAtoms();
-        updateTrace();
+        // board.spawnAtoms();
+        // updateTrace();
 
-    }
+    // }
     else if ( event.key === 'h' ) {
         board.atoms.visible = ! board.atoms.visible;
     }
