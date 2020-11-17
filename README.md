@@ -1,4 +1,4 @@
-# ardo-js
+# ardo
 GitHub Game Off 2020 - Moonshot
 
 ![](screenshots/teaser.png)
@@ -7,14 +7,19 @@ GitHub Game Off 2020 - Moonshot
 
 
 ## Description
+**ARDO** is an immersive, audio-based puzzle game, inspired by an old [board game from the 70s](https://en.wikipedia.org/wiki/Black_Box_(game)).
+
 Use your voice to send off soundwaves.
 Listen closely as the ghostly echoes reverberate around you.
-They will let you deduce where the orbs are hiding.
+They will let you deduce where the four charged atoms are hidden.
 Mark them all to win the game.
 Share your level with your friends and challenge their time.
 
 
 ## Rules
+
+The behaviour of sound in **ARDO** is similar to rays in the original game.
+The following images are taken from the according [Wikipedia article](https://en.wikipedia.org/wiki/Black_Box_(game)#Rules).
 
 | Hit | Miss | Deflection | Reflection |
 |:-:|:-:|:-:|:-:|
