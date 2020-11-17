@@ -1,9 +1,9 @@
 # ardo
 GitHub Game Off 2020 - Moonshot
 
-![](screenshots/teaser.png)
-
     Headphones and microphone required!
+
+![](screenshots/teaser.png)
 
 
 ## Description
