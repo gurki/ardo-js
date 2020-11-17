@@ -79,6 +79,8 @@ export class Board {
         this.mesh.add( this.guesses );
         this.raycaster = new THREE.Raycaster();
 
+        this.maxNumAtoms = 4;
+
         const planeGeom = new THREE.PlaneGeometry( 8, 8 );
         const planeMat = new THREE.MeshToonMaterial( { color: 0x335599, side: THREE.DoubleSide }  )
         this.planeMesh = new THREE.Mesh( planeGeom, planeMat );
@@ -174,7 +176,7 @@ export class Board {
             return;
         }
 
-        if ( this.numGuesses() >= 5 ) {
+        if ( this.numGuesses() >= this.maxNumAtoms ) {
             return;
         }
 
@@ -196,7 +198,7 @@ export class Board {
         this.clearAtoms();
         let count = 0;
 
-        while ( count < 5 )
+        while ( count < this.maxNumAtoms )
         {
             const tile = new THREE.Vector2(
                 Math.floor( Math.random() * 8 ),

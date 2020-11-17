@@ -118,7 +118,7 @@ const statusElement = document.getElementById( "status" );
 
 const reset = function() {
 
-    board.atoms.visible = false;
+    // board.atoms.visible = false;
     board.clear();
     board.spawnAtoms();
 
@@ -144,10 +144,10 @@ const checkVictory = function() {
 
         statusElement.innerHTML = "YOU WON in " + duration + "!!";
 
-    } else if ( board.numGuesses() < 5 ) {
-        statusElement.innerHTML = "place " + ( 5 - board.numGuesses() ) + " more guesses"
+    } else if ( board.numGuesses() < board.maxNumAtoms ) {
+        statusElement.innerHTML = "place " + ( board.maxNumAtoms - board.numGuesses() ) + " more guesses";
     } else {
-        statusElement.innerHTML = "that's not it"
+        statusElement.innerHTML = "that's not it";
     }
 
 }
