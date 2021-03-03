@@ -25,7 +25,7 @@
   "dependencies": {
     "express": "^4.8.8",
     "nodemon": "^2.0.6",
-    "three": "^0.122.0",
+    "three": "^0.125.0",
     "tone": "^14.7.58"
   },
   "type": "module"
